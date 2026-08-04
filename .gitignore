@@ -2,4 +2,4 @@ venv/
 __pycache__/
 *.pyc
 .env
-app/seed.py
+# app/seed.py
