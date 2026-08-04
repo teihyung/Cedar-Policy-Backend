@@ -5,6 +5,7 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session as DBSession
+from .models import Tenant
 
 from .db import get_db
 from .models import User, Session as SessionModel
@@ -40,3 +41,14 @@ def get_current_user(
     if user is None:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid or expired token")
     return user
+
+def require_tenant_access(tenant_id: str, user: User, db: DBSession) -> Tenant:
+    tenant = db.get(Tenant, tenant_id)
+    if tenant is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Tenant not found")
+
+    allowed_tenant_ids = {t.id for t in user.tenants}
+    if tenant.id not in allowed_tenant_ids:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Tenant not found")
+
+    return tenant
