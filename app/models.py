@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 from sqlalchemy import Column, String, ForeignKey, DateTime, Integer, Table
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
+from datetime import datetime, timedelta, timezone
 
 from .db import Base
 
@@ -61,3 +62,10 @@ class PolicyFile(Base):
     updated_at = Column(DateTime(timezone=True), default=_now, onupdate=_now)
 
     tenant = relationship("Tenant", back_populates="policy_files")
+
+class Session(Base):
+    __tablename__ = "sessions"
+
+    token = Column(String, primary_key=True)
+    user_id = Column(UUID(as_uuid=False), ForeignKey("users.id"), nullable=False)
+    expires_at = Column(DateTime(timezone=True), nullable=False)
