@@ -6,7 +6,7 @@ from app.db import engine, Base
 from app import models, gitstore  # noqa: F401 -- registers models on Base.metadata
 from app.routers import health, auth_routes, tenants, policy_files
 
-app = FastAPI(title="SmartVerify Policy Service")
+app = FastAPI(title="Cedar Policy Backend", version="0.1.0")
 
 # Browsers block cross-origin requests by default (your React dev server on
 # :5173/:3000 talking to this API on :8000 counts as cross-origin). This
