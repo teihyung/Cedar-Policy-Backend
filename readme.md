@@ -265,16 +265,3 @@ tests/
 | 404 vs 403 for cross-tenant access | 404 | Doesn't confirm to an unauthorized caller that the tenant/resource exists |
 | Duplicate filename on upload | 409 Conflict | Explicit versioning/overwrite is future work, not silent |
 | Auth | Hardcoded bearer session tokens, no OAuth | Explicitly out of scope per requirements |
-
----
-
-## Future work / bonus ideas
-
-- **Cedar schema validation** (`cedarpy.validate_policies`) — catch semantic errors (typo'd entity types,
-  invalid actions) in addition to syntax, once a per-tenant Cedar schema exists.
-- **File versioning/overwrite** — allow re-uploading a filename as a new version instead of `409`, using
-  Git history for diffing between versions.
-- **Pagination/filtering** on the list endpoint (frontend + backend).
-- **Soft delete** with restore, if audit requirements need deleted files to remain queryable.
-- **Row-Level Security (RLS)** in Postgres as an additional isolation layer, since this project already
-  runs on Supabase.
