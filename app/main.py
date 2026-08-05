@@ -12,7 +12,8 @@ app = FastAPI(title="Cedar Policy Backend", version="0.1.0")
 # :5173/:3000 talking to this API on :8000 counts as cross-origin). This
 # whitelists dev origins; override via env var for staging/prod domains.
 _origins = os.environ.get(
-    "CORS_ALLOWED_ORIGINS", "http://localhost:5173,http://localhost:3000, https://cedar-policy-frontend.vercel.app/"
+    "CORS_ALLOWED_ORIGINS",
+    "http://localhost:5173,http://localhost:3000,https://cedar-policy-frontend.vercel.app",
 ).split(",")
 
 app.add_middleware(
