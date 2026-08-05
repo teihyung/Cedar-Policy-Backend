@@ -179,21 +179,32 @@ uvicorn app.main:app --reload
 
 API available at `http://localhost:8000`. Interactive docs (Swagger UI) at `http://localhost:8000/docs`.
 
-### 5. Run tests
+---
+
+## Running tests
 
 ```bash
 pytest -v
 ```
 
-or 
+or
 
 ```bash
-PYTHONPATH=. pytest -v 
+PYTHONPATH=. pytest -v
 ```
 
-Tests reuse your `.env` `DATABASE_URL` (isolated via a separate Postgres schema, `test_smartverify`,
-created and dropped automatically) and a temp directory for Git storage — they never touch your real
-seeded data.
+Tests reuse your `.env` `DATABASE_URL`, isolated via a separate Postgres
+schema (`test_smartverify`) that's created and dropped automatically —
+they never touch your real seeded data. Git storage for tests uses a temp
+directory, also cleaned up automatically.
+
+In addition to the automated suite, all endpoints were manually exercised
+via Swagger UI (`/docs`) and Postman during development — including
+happy-path CRUD, Cedar validation rejection messages, and cross-tenant
+attack scenarios (e.g. requesting another tenant's policy ID directly) —
+to confirm behavior matched what the automated tests assert before
+writing them, and to sanity-check responses interactively as endpoints
+were built.
 
 ---
 
